@@ -63,6 +63,7 @@ namespace Casic
                 message = $"You lost! The wheel landed on {e.WinningSymbol}. Your new balance is ${player.Balance:F2}";
             }
 
+            Console.WriteLine($"Debug: SpinCompleted - WinningSymbol: {e.WinningSymbol}");
             UpdateBalanceLabel();
             MessageBox.Show(message);
         }
@@ -73,4 +74,3 @@ namespace Casic
         }
     }
 }
-
