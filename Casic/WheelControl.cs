@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -19,12 +19,14 @@ namespace Casic
             "Joker", "Joker"
         };
 
+        private static readonly string[] FixedSymbols;
         private static readonly string[] ShuffledSymbols;
 
         static WheelControl()
         {
             Random rng = new Random();
-            ShuffledSymbols = Symbols.OrderBy(x => rng.Next()).ToArray();
+            FixedSymbols = Symbols.OrderBy(x => rng.Next()).ToArray();
+            ShuffledSymbols = FixedSymbols.OrderBy(x => rng.Next()).ToArray(); 
         }
 
         private float angle;
@@ -38,7 +40,7 @@ namespace Casic
         public WheelControl()
         {
             this.DoubleBuffered = true;
-            this.Size = new Size(800, 800); // Увеличение размера колеса
+            this.Size = new Size(800, 800);
             timer = new Timer();
             timer.Interval = 20;
             timer.Tick += Timer_Tick;
@@ -52,8 +54,8 @@ namespace Casic
             angle = 0;
 
             Random rng = new Random();
-            int spins = rng.Next(5, 10); // Минимум 5 полных оборотов
-            targetAngle = spins * 360 + rng.Next(360); // Добавляем случайный угол
+            int spins = rng.Next(5, 10);
+            targetAngle = spins * 360 + rng.Next(360);
 
             timer.Start();
         }
@@ -62,7 +64,7 @@ namespace Casic
         {
             if (angle < targetAngle)
             {
-                angle += 10; // Увеличение угла вращения
+                angle += 10;
                 if (angle > targetAngle)
                 {
                     angle = targetAngle;
@@ -74,8 +76,8 @@ namespace Casic
                 timer.Stop();
                 spinning = false;
                 float finalAngle = angle % 360;
-                int winningIndex = (int)((finalAngle / sectorAngle) % NumSectors);
-                string winningSymbol = ShuffledSymbols[winningIndex];
+                int winningIndex = (int)((NumSectors - (finalAngle / sectorAngle)) % NumSectors);
+                string winningSymbol = FixedSymbols[winningIndex]; 
                 SpinCompleted?.Invoke(this, new SpinEventArgs(winningSymbol));
             }
         }
@@ -96,11 +98,10 @@ namespace Casic
                 }
                 g.DrawPie(Pens.Black, 0, 0, ClientSize.Width, ClientSize.Height, currentAngle, sectorAngle);
                 float midAngle = currentAngle + sectorAngle / 2;
-                DrawSymbol(g, ShuffledSymbols[i], midAngle);
+                DrawSymbol(g, FixedSymbols[i], midAngle); 
                 currentAngle += sectorAngle;
             }
 
-            // Рисуем стрелку
             DrawArrow(g);
         }
 
@@ -123,7 +124,7 @@ namespace Casic
 
         private void DrawArrow(Graphics g)
         {
-            float arrowSize = 40; // Увеличение размера стрелки
+            float arrowSize = 40;
             PointF[] arrowPoints = new PointF[]
             {
                 new PointF(ClientSize.Width / 2f - arrowSize / 2, 0),
@@ -134,16 +135,6 @@ namespace Casic
             {
                 g.FillPolygon(brush, arrowPoints);
             }
-        }
-
-        public static string[] GetSymbols()
-        {
-            return Symbols;
-        }
-
-        public static string[] GetShuffledSymbols()
-        {
-            return ShuffledSymbols;
         }
     }
 
