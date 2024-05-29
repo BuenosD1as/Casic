@@ -54,8 +54,8 @@ namespace Casic
             angle = 0;
 
             Random rng = new Random();
-            int spins = rng.Next(5, 10); 
-            targetAngle = spins * 360 + rng.Next(360); 
+            int spins = rng.Next(5, 10);
+            targetAngle = spins * 360 + rng.Next(360);
 
             timer.Start();
         }
@@ -127,7 +127,7 @@ namespace Casic
 
         private void DrawArrow(Graphics g)
         {
-            float arrowSize = 40; 
+            float arrowSize = 40;
             PointF[] arrowPoints = new PointF[]
             {
                 new PointF(ClientSize.Width / 2f - arrowSize / 2, 0),
