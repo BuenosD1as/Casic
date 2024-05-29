@@ -27,6 +27,12 @@ namespace Casic
                 return;
             }
 
+            if (betAmount > player.Balance)
+            {
+                MessageBox.Show("You don't have enough balance to place this bet.");
+                return;
+            }
+
             var selectedSymbols = betSymbolComboBox.CheckedItems.Cast<string>().ToList();
             if (!selectedSymbols.Any())
             {
