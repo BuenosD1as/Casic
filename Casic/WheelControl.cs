@@ -54,8 +54,8 @@ namespace Casic
             angle = 0;
 
             Random rng = new Random();
-            int spins = rng.Next(5, 10); // Минимум 5 полных оборотов
-            targetAngle = spins * 360 + rng.Next(360); // Добавляем случайный угол
+            int spins = rng.Next(5, 10); 
+            targetAngle = spins * 360 + rng.Next(360); 
 
             timer.Start();
         }
@@ -77,7 +77,6 @@ namespace Casic
                 spinning = false;
                 float finalAngle = angle % 360;
 
-                // Определяем сектор, на который указывает стрелка
                 int winningIndex = (int)((finalAngle / sectorAngle) + NumSectors) % NumSectors;
 
                 string winningSymbol = ShuffledSymbols[winningIndex];
@@ -106,7 +105,6 @@ namespace Casic
                 currentAngle += sectorAngle;
             }
 
-            // Рисуем стрелку
             DrawArrow(g);
         }
 
@@ -129,7 +127,7 @@ namespace Casic
 
         private void DrawArrow(Graphics g)
         {
-            float arrowSize = 40; // Увеличение размера стрелки
+            float arrowSize = 40; 
             PointF[] arrowPoints = new PointF[]
             {
                 new PointF(ClientSize.Width / 2f - arrowSize / 2, 0),
