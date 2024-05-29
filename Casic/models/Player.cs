@@ -1,37 +1,46 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Casic
 {
     public class Player
     {
-        public double Balance { get; private set; }
-        public List<Bet> CurrentBets { get; private set; }
+        private double balance;
+        private List<Bet> currentBets;
 
         public Player(double initialBalance)
         {
-            Balance = initialBalance;
-            CurrentBets = new List<Bet>();
+            balance = initialBalance;
+            currentBets = new List<Bet>();
         }
+
+        public double Balance => balance;
+
+        public List<Bet> CurrentBets => currentBets;
 
         public void MakeBets(List<Bet> bets)
         {
-            double totalBetAmount = bets.Sum(bet => bet.Amount);
-            if (totalBetAmount > Balance)
-                throw new System.Exception("Insufficient balance to place bets");
-
-            Balance -= totalBetAmount;
-            CurrentBets = bets;
-        }
-
-        public void AddBalance(double amount)
-        {
-            Balance += amount;
+            currentBets.AddRange(bets);
+            foreach (var bet in bets)
+            {
+                balance -= bet.Amount;
+            }
         }
 
         public bool ConfirmWinning(string winningSymbol)
         {
-            return CurrentBets.Any(bet => bet.Sector.Symbol == winningSymbol);
+            return currentBets.Any(bet => bet.Sector.Symbol == winningSymbol);
+        }
+
+        public void AddBalance(double amount)
+        {
+            balance += amount;
+        }
+
+        public void ClearBets()
+        {
+            currentBets.Clear();
         }
     }
 }
