@@ -40,8 +40,8 @@ namespace Casic
             {
                 Image = Image.FromFile("C:\\Casic\\Casic\\Casic\\Properties\\Resources\\table.png"),
                 SizeMode = PictureBoxSizeMode.StretchImage,
-                Location = new Point(20, 200), // Подвинули немного влево
-                Size = new Size(500, 500) // Adjust size as necessary
+                Location = new Point(20, 200), 
+                Size = new Size(500, 500) 
             };
             tablePictureBox.Paint += TablePictureBox_Paint;
             tablePictureBox.MouseClick += TablePictureBox_MouseClick;
@@ -49,7 +49,7 @@ namespace Casic
 
             betRectangles = new Dictionary<string, Rectangle>
     {
-        { "1$", new Rectangle(140, 180, 60, 60) }, // Подвинули карточки
+        { "1$", new Rectangle(140, 180, 60, 60) }, 
         { "2$", new Rectangle(230, 180, 60, 60) },
         { "5$", new Rectangle(320, 180, 60, 60) },
         { "10$", new Rectangle(140, 270, 60, 60) },
@@ -162,7 +162,7 @@ namespace Casic
 
             if (isWin)
             {
-                // Clear the bets after acknowledging the message
+                
                 foreach (var key in bets.Keys.ToList())
                 {
                     bets[key] = 0;
