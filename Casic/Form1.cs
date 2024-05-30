@@ -143,14 +143,12 @@ namespace Casic
         private void WheelControl_SpinCompleted(object sender, SpinEventArgs e)
         {
             string message;
-            bool isWin = false;
 
             if (player.ConfirmWinning(e.WinningSymbol))
             {
                 double payout = game.GetSectorBySymbol(e.WinningSymbol).Payout * player.CurrentBets.First(bet => bet.Sector.Symbol == e.WinningSymbol).Amount;
                 player.AddBalance(payout);
                 message = $"You won! The wheel landed on {e.WinningSymbol}. Your new balance is ${player.Balance:F2}";
-                isWin = true;
             }
             else
             {
@@ -160,16 +158,13 @@ namespace Casic
             Console.WriteLine($"Debug: SpinCompleted - WinningSymbol: {e.WinningSymbol}");
             MessageBox.Show(message);
 
-            if (isWin)
+            // Clear the bets after acknowledging the message
+            foreach (var key in bets.Keys.ToList())
             {
-                
-                foreach (var key in bets.Keys.ToList())
-                {
-                    bets[key] = 0;
-                }
-                player.ClearBets();
-                tablePictureBox.Invalidate();
+                bets[key] = 0;
             }
+            player.ClearBets();
+            tablePictureBox.Invalidate();
 
             UpdateBalanceLabel();
         }
