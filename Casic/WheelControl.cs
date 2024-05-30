@@ -33,7 +33,7 @@ namespace Casic
         public WheelControl()
         {
             this.DoubleBuffered = true;
-            this.Size = new Size(800, 800); // Увеличение размера колеса
+            this.Size = new Size(800, 800); 
             timer = new Timer();
             timer.Interval = 20;
             timer.Tick += Timer_Tick;
@@ -64,7 +64,7 @@ namespace Casic
         {
             if (angle < targetAngle)
             {
-                angle += 10; // Увеличение угла вращения
+                angle += 10;
                 if (angle > targetAngle)
                 {
                     angle = targetAngle;
